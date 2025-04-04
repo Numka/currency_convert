@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:currency_convert/app/app_router.dart';
+import 'package:currency_convert/features/features.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {
@@ -21,7 +23,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> changeScreen() async {
-    await context.router.replace(const AuthRoute());
+    final authStatus = context.read<AuthCubit>().state.status.isAuthenticated;
+    if (authStatus) {
+      await context.router.replace(const BottomTabRoute());
+    } else {
+      await context.router.replace(const AuthRoute());
+    }
   }
 
   @override

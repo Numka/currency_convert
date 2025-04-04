@@ -1,11 +1,11 @@
 part of 'auth_cubit.dart';
 
-enum AuthStatus { unauthenticated, loading, success, failure }
+enum AuthStatus { unauthenticated, loading, authenticated, failure }
 
 extension AuthStatusX on AuthStatus {
-  bool get isInitial => this == AuthStatus.unauthenticated;
+  bool get isUnauthenticated => this == AuthStatus.unauthenticated;
   bool get isLoading => this == AuthStatus.loading;
-  bool get isSuccess => this == AuthStatus.success;
+  bool get isAuthenticated => this == AuthStatus.authenticated;
   bool get isFailure => this == AuthStatus.failure;
 }
 

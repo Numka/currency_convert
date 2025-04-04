@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:currency_convert/app/app_route_guard.dart';
 import 'package:currency_convert/features/features.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class AppRouter extends RootStackRouter {
         CustomRoute(
           page: BottomTabRoute.page,
           path: '/tabs-screen',
+          guards: [AuthGuard()],
           transitionsBuilder: (_, animation, ___, child) => FadeTransition(
             opacity: animation,
             child: child,
@@ -28,10 +30,12 @@ class AppRouter extends RootStackRouter {
             CupertinoRoute(
               page: CurrencyListRoute.page,
               path: 'currency-list',
+              guards: [AuthGuard()],
             ),
             CupertinoRoute(
               page: ConversionRoute.page,
               path: 'conversion-route',
+              guards: [AuthGuard()],
             ),
           ],
         ),

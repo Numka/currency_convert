@@ -28,7 +28,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state.status.isSuccess) {
+        if (state.status.isAuthenticated) {
           context.router.replace(const BottomTabRoute());
         }
       },

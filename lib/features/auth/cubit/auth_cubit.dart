@@ -10,7 +10,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
 
   void login(String username, String password) {
     if (username == 'demo' && password == 'demo') {
-      emit(state.copyWith(status: AuthStatus.success));
+      emit(state.copyWith(status: AuthStatus.authenticated));
     } else {
       emit(state.copyWith(status: AuthStatus.failure));
     }
