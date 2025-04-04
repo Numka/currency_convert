@@ -1,22 +1,19 @@
 import 'package:currency_convert/app/app_router.dart';
-import 'package:currency_convert/features/conversion/data/remote/currency_repository.dart';
 import 'package:currency_convert/features/features.dart';
+import 'package:currency_convert/injection.dart';
 import 'package:currency_convert/l10n/arb/app_localizations.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class App extends StatelessWidget {
-  App({super.key});
-
-  final _appRouter = AppRouter();
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => AuthCubit()..checkAuthStatus()),
-        BlocProvider(create: (_) => CurrencyListCubit(currencyRepo: CurrencyRepository(dio: Dio()))),
+        BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuthStatus()),
+        BlocProvider(create: (_) => getIt<CurrencyListCubit>()),
       ],
       child: MaterialApp.router(
         theme: ThemeData(
@@ -27,7 +24,7 @@ class App extends StatelessWidget {
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        routerConfig: _appRouter.config(),
+        routerConfig: getIt<AppRouter>().config(),
       ),
     );
   }
