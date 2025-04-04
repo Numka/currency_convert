@@ -7,6 +7,10 @@ part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AppRouter extends RootStackRouter {
+  AppRouter({required this.authGuard});
+
+  final AuthGuard authGuard;
+
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
@@ -20,7 +24,7 @@ class AppRouter extends RootStackRouter {
         CustomRoute(
           page: BottomTabRoute.page,
           path: '/tabs-screen',
-          guards: [AuthGuard()],
+          guards: [authGuard],
           transitionsBuilder: (_, animation, ___, child) => FadeTransition(
             opacity: animation,
             child: child,
@@ -30,12 +34,12 @@ class AppRouter extends RootStackRouter {
             CupertinoRoute(
               page: CurrencyListRoute.page,
               path: 'currency-list',
-              guards: [AuthGuard()],
+              guards: [authGuard],
             ),
             CupertinoRoute(
               page: ConversionRoute.page,
               path: 'conversion-route',
-              guards: [AuthGuard()],
+              guards: [authGuard],
             ),
           ],
         ),
