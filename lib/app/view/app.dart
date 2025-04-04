@@ -1,4 +1,4 @@
-import 'package:currency_convert/counter/counter.dart';
+import 'package:currency_convert/features/bottom_tab/view/bottom_tab_screen.dart';
 import 'package:currency_convert/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
+      home: const BottomTabScreen(),
     );
   }
 }
