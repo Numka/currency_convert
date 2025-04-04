@@ -16,6 +16,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (_) => getIt<CurrencyListCubit>()),
       ],
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           appBarTheme: AppBarTheme(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
