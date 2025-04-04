@@ -1,13 +1,16 @@
+import 'package:currency_convert/app/app_router.dart';
 import 'package:currency_convert/features/bottom_tab/view/bottom_tab_screen.dart';
 import 'package:currency_convert/l10n/arb/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  App({super.key});
+
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -16,7 +19,7 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const BottomTabScreen(),
+      routerConfig: _appRouter.config(),
     );
   }
 }
