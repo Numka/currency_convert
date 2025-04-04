@@ -7,8 +7,7 @@ part of 'auth_cubit.dart';
 // **************************************************************************
 
 AuthState _$AuthStateFromJson(Map<String, dynamic> json) => AuthState(
-      status: $enumDecodeNullable(_$AuthStatusEnumMap, json['status']) ??
-          AuthStatus.initial,
+      status: $enumDecodeNullable(_$AuthStatusEnumMap, json['status']) ?? AuthStatus.unauthenticated,
     );
 
 Map<String, dynamic> _$AuthStateToJson(AuthState instance) => <String, dynamic>{
@@ -16,7 +15,7 @@ Map<String, dynamic> _$AuthStateToJson(AuthState instance) => <String, dynamic>{
     };
 
 const _$AuthStatusEnumMap = {
-  AuthStatus.initial: 'initial',
+  AuthStatus.unauthenticated: 'unauthenticated',
   AuthStatus.loading: 'loading',
   AuthStatus.success: 'success',
   AuthStatus.failure: 'failure',

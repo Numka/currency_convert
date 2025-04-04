@@ -1,9 +1,9 @@
 part of 'auth_cubit.dart';
 
-enum AuthStatus { initial, loading, success, failure }
+enum AuthStatus { unauthenticated, loading, success, failure }
 
 extension AuthStatusX on AuthStatus {
-  bool get isInitial => this == AuthStatus.initial;
+  bool get isInitial => this == AuthStatus.unauthenticated;
   bool get isLoading => this == AuthStatus.loading;
   bool get isSuccess => this == AuthStatus.success;
   bool get isFailure => this == AuthStatus.failure;
@@ -12,7 +12,7 @@ extension AuthStatusX on AuthStatus {
 @JsonSerializable()
 final class AuthState extends Equatable {
   const AuthState({
-    this.status = AuthStatus.initial,
+    this.status = AuthStatus.unauthenticated,
   });
 
   final AuthStatus status;
