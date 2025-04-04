@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:currency_convert/features/features.dart';
+import 'package:currency_convert/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,67 +10,88 @@ class ConversionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Currency Conversion')),
-      body: BlocListener<CurrencyListCubit, CurrencyListState>(
-        listener: (context, state) {
-          if (state.status.isSuccess) {
-            context.read<ConversionCubit>().setCurrencies(state.currencies);
-          }
-        },
-        child: BlocBuilder<ConversionCubit, ConversionState>(
-          builder: (context, state) {
-            if (state.status.isLoading || state.currencies.isEmpty) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              return Column(
-                children: [
-                  _buildCurrencyDropdown(
-                    context,
-                    'From',
-                    state.fromCurrency,
-                    state.currencies,
-                    (currency) {
-                      context.read<ConversionCubit>().setFromCurrency(currency);
-                    },
-                  ),
-                  _buildCurrencyDropdown(
-                    context,
-                    'To',
-                    state.toCurrency,
-                    state.currencies,
-                    (currency) {
-                      context.read<ConversionCubit>().setToCurrency(currency);
-                    },
-                  ),
-                  TextField(
-                    decoration: const InputDecoration(
-                      labelText: 'Amount',
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      final amount = double.tryParse(value) ?? 0;
-                      context.read<ConversionCubit>().setAmount(amount);
-                    },
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (state.fromCurrency != null &&
-                          state.toCurrency != null &&
-                          state.amount > 0 &&
-                          state.fromCurrency != state.toCurrency) {
-                        context.read<ConversionCubit>().calculateConversion();
-                      }
-                    },
-                    child: const Text('Convert'),
-                  ),
-                  if (state.result != null) _buildResult(state),
-                ],
-              );
+    final initialCurrencyState = context.read<CurrencyListCubit>().state;
+
+    return BlocProvider(
+      create: (context) {
+        final cubit = getIt<ConversionCubit>();
+        if (initialCurrencyState.status.isSuccess) {
+          cubit.setCurrencies(initialCurrencyState.currencies);
+        }
+        return cubit;
+      },
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Currency Conversion')),
+        body: BlocListener<CurrencyListCubit, CurrencyListState>(
+          listener: (context, state) {
+            if (state.status.isSuccess) {
+              context.read<ConversionCubit>().setCurrencies(state.currencies);
             }
           },
+          child: BlocBuilder<ConversionCubit, ConversionState>(
+            builder: (context, state) {
+              if (state.currencies.isNotEmpty) {
+                return _buildConversionForm(context, state);
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildConversionForm(BuildContext context, ConversionState state) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildCurrencyDropdown(
+            context,
+            'From',
+            state.fromCurrency,
+            state.currencies,
+            (currency) {
+              context.read<ConversionCubit>().setFromCurrency(currency);
+            },
+          ),
+          const SizedBox(height: 16),
+          _buildCurrencyDropdown(
+            context,
+            'To',
+            state.toCurrency,
+            state.currencies,
+            (currency) {
+              context.read<ConversionCubit>().setToCurrency(currency);
+            },
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            decoration: const InputDecoration(
+              labelText: 'Amount',
+              border: OutlineInputBorder(),
+            ),
+            keyboardType: TextInputType.number,
+            onChanged: (value) {
+              final amount = double.tryParse(value) ?? 0;
+              context.read<ConversionCubit>().setAmount(amount);
+            },
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              if (state.fromCurrency != null &&
+                  state.toCurrency != null &&
+                  state.amount > 0 &&
+                  state.fromCurrency != state.toCurrency) {
+                context.read<ConversionCubit>().calculateConversion();
+              }
+            },
+            child: const Text('Convert'),
+          ),
+          const SizedBox(height: 16),
+          if (state.result != null) _buildResult(state),
+        ],
       ),
     );
   }
@@ -124,9 +146,11 @@ class ConversionScreen extends StatelessWidget {
       children: [
         Text(
           '${state.amount.toStringAsFixed(2)} $fromSymbol -> ${result.total.toStringAsFixed(2)} $toSymbol',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         Text(
           '(${result.toAmount.toStringAsFixed(2)} $toSymbol + 3%)',
+          style: const TextStyle(fontSize: 16),
         ),
       ],
     );

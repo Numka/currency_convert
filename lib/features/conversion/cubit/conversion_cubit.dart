@@ -28,7 +28,8 @@ class ConversionCubit extends Cubit<ConversionState> {
   }
 
   void setCurrencies(List<Currency> currencies) {
-    emit(state.copyWith(amount: 0, currencies: currencies));
+    emit(state.copyWith(status: ConversionStatus.loading));
+    emit(state.copyWith(amount: 0, currencies: currencies, status: ConversionStatus.success));
   }
 
   void calculateConversion() {
@@ -65,8 +66,8 @@ class ConversionCubit extends Cubit<ConversionState> {
     double secondCurrencyInUSD,
     double amount,
   ) {
-    final amountInUSD = amount / firstCurrencyInUSD;
-    final convertedAmount = amountInUSD * secondCurrencyInUSD;
+    final amountInUSD = amount * firstCurrencyInUSD;
+    final convertedAmount = amountInUSD / secondCurrencyInUSD;
 
     return convertedAmount;
   }

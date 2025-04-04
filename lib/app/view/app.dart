@@ -14,7 +14,7 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuthStatus()),
         BlocProvider(create: (_) => getIt<CurrencyListCubit>()..watchCurrencies()),
-        BlocProvider(create: (_) => getIt<ConversionCubit>()),
+        //BlocProvider(create: (_) => getIt<ConversionCubit>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

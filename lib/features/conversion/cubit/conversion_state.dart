@@ -41,6 +41,7 @@ final class ConversionState extends Equatable {
     double? amount,
     List<Currency>? currencies,
     ConversionResult? result,
+    ConversionStatus? status,
   }) {
     return ConversionState(
       fromCurrency: fromCurrency ?? this.fromCurrency,
@@ -48,6 +49,7 @@ final class ConversionState extends Equatable {
       amount: amount ?? this.amount,
       currencies: currencies ?? this.currencies,
       result: result ?? this.result,
+      status: status ?? this.status,
     );
   }
 
