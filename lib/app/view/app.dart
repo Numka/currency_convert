@@ -13,7 +13,7 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuthStatus()),
-        BlocProvider(create: (_) => getIt<CurrencyListCubit>()),
+        BlocProvider(create: (_) => getIt<CurrencyListCubit>()..watchCurrencies()),
         BlocProvider(create: (_) => getIt<ConversionCubit>()),
       ],
       child: MaterialApp.router(

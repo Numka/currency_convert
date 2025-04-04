@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:currency_convert/features/conversion/data/remote/currency_repository.dart';
 import 'package:currency_convert/features/features.dart';
 import 'package:equatable/equatable.dart';
 
@@ -9,9 +10,25 @@ class CurrencyListCubit extends Cubit<CurrencyListState> {
   CurrencyListCubit({required this.currencyRepo}) : super(const CurrencyListState());
 
   final CurrencyRepository currencyRepo;
+  StreamSubscription<dynamic>? fetchSubscription;
+  Timer? spamTimer;
+
+  void watchCurrencies() {
+    fetchSubscription?.cancel();
+
+    fetchSubscription = Stream.periodic(
+      const Duration(seconds: 30),
+      (_) => fetchCurrencies(),
+    ).listen((_) {});
+
+    fetchCurrencies();
+  }
 
   Future<void> fetchCurrencies() async {
-    // add timer so no spam allowed TODO:
+    if (spamTimer?.isActive ?? false) return;
+
+    spamTimer = Timer(const Duration(seconds: 1), () {});
+
     emit(state.copyWith(status: CurrencyListStatus.loading));
     try {
       final currencies = await currencyRepo.getCurrencies();
@@ -19,9 +36,5 @@ class CurrencyListCubit extends Cubit<CurrencyListState> {
     } catch (e) {
       emit(state.copyWith(errorMessage: e.toString(), status: CurrencyListStatus.failure));
     }
-  }
-
-  Future<void> watchCurrencies() async {
-    // watch every 30 sec, TODO:
   }
 }

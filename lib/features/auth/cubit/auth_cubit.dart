@@ -17,7 +17,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
   }
 
   void logout() {
-    //TODO:
+    emit(state.copyWith(status: AuthStatus.unauthenticated));
   }
 
   void checkAuthStatus() {

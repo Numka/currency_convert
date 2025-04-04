@@ -22,9 +22,11 @@ class BottomTabScreen extends StatelessWidget {
 
             return BottomNavigationBar(
               currentIndex: tabsRouter.activeIndex,
-              onTap: currenciesLoaded 
-                ? tabsRouter.setActiveIndex 
-                : (index) => _showLoadingSnackbar(context,),
+              onTap: currenciesLoaded
+                  ? tabsRouter.setActiveIndex
+                  : (index) => _showLoadingSnackbar(
+                        context,
+                      ),
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.list),
@@ -45,7 +47,7 @@ class BottomTabScreen extends StatelessWidget {
   void _showLoadingSnackbar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Please wait while currencies load'),
+        content: Text('Please wait until currencies load'),
         duration: Duration(seconds: 1),
       ),
     );

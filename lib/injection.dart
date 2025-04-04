@@ -22,4 +22,7 @@ Future<void> initInjection() async {
     () => CurrencyRepository(dio: getIt()),
   );
   getIt.registerLazySingleton(Dio.new);
+  getIt.registerFactory(
+    ConversionCubit.new,
+  );
 }
