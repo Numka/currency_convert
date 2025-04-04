@@ -42,56 +42,61 @@ class ConversionScreen extends StatelessWidget {
   }
 
   Widget _buildConversionForm(BuildContext context, ConversionState state) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          _buildCurrencyDropdown(
-            context,
-            'From',
-            state.fromCurrency,
-            state.currencies,
-            (currency) {
-              context.read<ConversionCubit>().setFromCurrency(currency);
-            },
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 500),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              _buildCurrencyDropdown(
+                context,
+                'From',
+                state.fromCurrency,
+                state.currencies,
+                (currency) {
+                  context.read<ConversionCubit>().setFromCurrency(currency);
+                },
+              ),
+              const SizedBox(height: 16),
+              _buildCurrencyDropdown(
+                context,
+                'To',
+                state.toCurrency,
+                state.currencies,
+                (currency) {
+                  context.read<ConversionCubit>().setToCurrency(currency);
+                },
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Amount',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  final amount = double.tryParse(value) ?? 0;
+                  context.read<ConversionCubit>().setAmount(amount);
+                },
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  if (state.fromCurrency != null &&
+                      state.toCurrency != null &&
+                      state.amount > 0 &&
+                      state.fromCurrency != state.toCurrency) {
+                    context.read<ConversionCubit>().calculateConversion();
+                  }
+                },
+                child: const Text('Convert'),
+              ),
+              const SizedBox(height: 16),
+              if (state.result != null) _buildResult(state),
+            ],
           ),
-          const SizedBox(height: 16),
-          _buildCurrencyDropdown(
-            context,
-            'To',
-            state.toCurrency,
-            state.currencies,
-            (currency) {
-              context.read<ConversionCubit>().setToCurrency(currency);
-            },
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            decoration: const InputDecoration(
-              labelText: 'Amount',
-              border: OutlineInputBorder(),
-            ),
-            keyboardType: TextInputType.number,
-            onChanged: (value) {
-              final amount = double.tryParse(value) ?? 0;
-              context.read<ConversionCubit>().setAmount(amount);
-            },
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              if (state.fromCurrency != null &&
-                  state.toCurrency != null &&
-                  state.amount > 0 &&
-                  state.fromCurrency != state.toCurrency) {
-                context.read<ConversionCubit>().calculateConversion();
-              }
-            },
-            child: const Text('Convert'),
-          ),
-          const SizedBox(height: 16),
-          if (state.result != null) _buildResult(state),
-        ],
+        ),
       ),
     );
   }
