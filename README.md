@@ -20,7 +20,7 @@ $ flutter pub get
 ```
 Шаг третий: запуск приложения, если у вас VsCode, то стандартный F5 или ваш хоткей для "Run" -> "Start Debugging", если нет то
 ```sh
-$ flutter build web --target=lib/main_development.dart
+$ flutter run --flavor development --target lib/main_development.dart
 ```
 Шаг четвертый (PWA): сбилдите flutter web
 ```sh
