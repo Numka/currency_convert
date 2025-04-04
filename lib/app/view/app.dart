@@ -1,5 +1,5 @@
 import 'package:currency_convert/features/bottom_tab/view/bottom_tab_screen.dart';
-import 'package:currency_convert/l10n/l10n.dart';
+import 'package:currency_convert/l10n/arb/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
