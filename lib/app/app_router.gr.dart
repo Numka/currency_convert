@@ -13,7 +13,8 @@ part of 'app_router.dart';
 /// generated route for
 /// [AuthScreen]
 class AuthRoute extends PageRouteInfo<void> {
-  const AuthRoute({List<PageRouteInfo>? children}) : super(AuthRoute.name, initialChildren: children);
+  const AuthRoute({List<PageRouteInfo>? children})
+    : super(AuthRoute.name, initialChildren: children);
 
   static const String name = 'AuthRoute';
 
@@ -28,7 +29,8 @@ class AuthRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [BottomTabScreen]
 class BottomTabRoute extends PageRouteInfo<void> {
-  const BottomTabRoute({List<PageRouteInfo>? children}) : super(BottomTabRoute.name, initialChildren: children);
+  const BottomTabRoute({List<PageRouteInfo>? children})
+    : super(BottomTabRoute.name, initialChildren: children);
 
   static const String name = 'BottomTabRoute';
 
@@ -43,7 +45,8 @@ class BottomTabRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [ConversionScreen]
 class ConversionRoute extends PageRouteInfo<void> {
-  const ConversionRoute({List<PageRouteInfo>? children}) : super(ConversionRoute.name, initialChildren: children);
+  const ConversionRoute({List<PageRouteInfo>? children})
+    : super(ConversionRoute.name, initialChildren: children);
 
   static const String name = 'ConversionRoute';
 
@@ -58,7 +61,8 @@ class ConversionRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [CurrencyListScreen]
 class CurrencyListRoute extends PageRouteInfo<void> {
-  const CurrencyListRoute({List<PageRouteInfo>? children}) : super(CurrencyListRoute.name, initialChildren: children);
+  const CurrencyListRoute({List<PageRouteInfo>? children})
+    : super(CurrencyListRoute.name, initialChildren: children);
 
   static const String name = 'CurrencyListRoute';
 
@@ -73,7 +77,8 @@ class CurrencyListRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [SplashScreen]
 class SplashRoute extends PageRouteInfo<void> {
-  const SplashRoute({List<PageRouteInfo>? children}) : super(SplashRoute.name, initialChildren: children);
+  const SplashRoute({List<PageRouteInfo>? children})
+    : super(SplashRoute.name, initialChildren: children);
 
   static const String name = 'SplashRoute';
 
